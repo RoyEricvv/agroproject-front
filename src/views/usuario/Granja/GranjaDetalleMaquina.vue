@@ -426,10 +426,15 @@ export default {
     accionItem: function(item, accion) {
       console.log("accion: " + JSON.stringify(item));
       if (accion === "Editar") {
-        this.itemEstandar.estado_animal = item.estado_animal;
         this.itemEstandar.nombre = item.nombre;
+        this.itemEstandar.numero_serie = item.numero_serie;
+        this.itemEstandar.precio = item.precio;
+        this.itemEstandar.moneda = item.moneda;
+        this.itemEstandar.proveedor = item.proveedor;
+        this.itemEstandar.vida_estimada = item.vida_estimada;
+        this.itemEstandar.tipo_depreciacion = item.tipo_depreciacion;
         this.itemEstandar.comentario = item.comentario;
-        this.itemEstandar.precio_kg_animal = item.precio_kg_animal;
+        this.itemEstandar.fecha_compra = item.fecha_compra;
         this.itemEstandar.granja_id = item.granja_id;
         this.itemEstandar.id = item.id;
         this.accionModal = "Editar";
@@ -440,22 +445,6 @@ export default {
       } else if (accion === "eliminar") {
         this.itemEstandar = item;
         this.modo = 2;
-      } else if (accion === "Contabilizar") {
-        this.itemEstandar = item;
-        this.itemEstandar.estado_animal = 3;
-        updateAnimales(this.itemEstandar).then(Response => {
-          this.modalDialog = true;
-          if (Response.status == 200) {
-            this.alert = true;
-            this.state = true;
-          } else {
-            this.alert = true;
-            this.state = false;
-            this.mensajeError = Response.data.Mensaje;
-          }
-          this.loadData();
-          this.tablaKey += 1;
-        });
       } else {
         deleteAnimales(item.id).then(Response => {
           if (Response.status == 200) {
