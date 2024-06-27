@@ -1,13 +1,13 @@
 import axios from "axios";
 //URL base,
-const url = process.env.VUE_APP_API_URL + "maquinas";
+const url = process.env.VUE_APP_API_URL + "equipos";
 
-//Servicio que devuelve todos las maquinas
-export async function getAllMaquinas(granja_id) {
+//Servicio que devuelve todos los equipos
+export async function getAllMaquinasGranja(granja_id) {
   var responseData;
   //Get con parámetro en el url
   await axios
-    .get(url + "/" + granja_id + "/allMaquina")
+    .get(url + "/" + granja_id + "/allGranja")
     .then(function(response) {
       console.log(response);
       // handle success  
@@ -20,12 +20,12 @@ export async function getAllMaquinas(granja_id) {
     });
   return responseData;
 }
-//Servicio que devuelve todos los animales
-export async function getAllMaquinasUsuario(usuarioId) {
+//Servicio que devuelve todos los equipos de un usuario
+export async function getAllMaquinasUsuario(usuario_id, tipo) {
   var responseData;
   //Get con parámetro en el url
   await axios
-    .get(url + "/" + usuarioId + "/" + "/allMaquinas")
+    .get(url + "/" + usuario_id + "/" + tipo + "/all")
     .then(function(response) {
       console.log(response);
       // handle success
@@ -39,12 +39,12 @@ export async function getAllMaquinasUsuario(usuarioId) {
   return responseData;
 }
 
-//Servicio que devuelve un animal
-export async function getOneMaquinas(maquinaID) {
+//Servicio que devuelve un equipo
+export async function getOneMaquina(equipo_id) {
   var responseData;
   //Get con parámetro en el url
   await axios
-    .get(url + "/" + maquinaID)
+    .get(url + "/" + equipo_id)
     .then(function(response) {
       console.log(response);
       // handle success
@@ -58,12 +58,12 @@ export async function getOneMaquinas(maquinaID) {
   return responseData;
 }
 
-//Servicio que crea una maquina
-export async function createMaquinas(maquina) {
+//Servicio que crea nuevo equipo
+export async function createMaquinas(equipo) {
   var responseData;
   //Get con parámetro en el url
   await axios
-    .post(url, maquina)
+    .post(url, equipo)
     .then(function(response) {
       console.log(response);
       // handle success
@@ -77,12 +77,12 @@ export async function createMaquinas(maquina) {
   return responseData;
 }
 
-//Servicio que actualiza una maquina mediante ID
-export async function updateMaquinas(maquina) {
+//Servicio que actualiza una equipo mediante ID
+export async function updateMaquinas(equipo) {
   var responseData;
   //Get con parámetro en el url
   await axios
-    .post(url + "/" + maquina.id, maquina)
+    .post(url + "/" + equipo.id, equipo)
     .then(function(response) {
       console.log(response);
       // handle success
@@ -96,12 +96,12 @@ export async function updateMaquinas(maquina) {
   return responseData;
 }
 
-//Servicio que elimina una maquina
+//Servicio que elimina una equipo
 export async function deleteMaquinas(maquinaID) {
   var responseData;
   //Get con parámetro en el url
   await axios
-    .get(url + "/" + maquinaID + "/delete")
+    .delete(url + "/" + maquinaID)
     .then(function(response) {
       console.log(response);
       // handle success

@@ -29,33 +29,11 @@
           <v-container fluid>
             <div>
               <v-card-title class="headline">
-                {{ accionModal }} Animal
+                {{ accionModal }} Equipo
               </v-card-title>
               <v-divider></v-divider>
               <v-card-text>
                 <v-container>
-                  <v-row>
-                    <v-col v-if="accionModal != 'Editar'" cols="12" md="12">
-                      <v-autocomplete
-                        v-model="itemEstandar.especie"
-                        :items="selectEspecie"
-                        item-text="nombre"
-                        item-value="id"
-                        outlined
-                        label="Especie"
-                        return-object
-                        hide-no-data
-                      ></v-autocomplete>
-                    </v-col>
-                    <v-col v-if="accionModal == 'Editar'" cols="12" md="12">
-                      <v-text-field
-                        v-model="itemEstandar.especie.nombre"
-                        label="Especie"
-                        outlined
-                        disabled
-                      ></v-text-field>
-                    </v-col>
-                  </v-row>
                   <v-row>
                     <v-col cols="12" md="8">
                       <v-text-field
@@ -70,7 +48,7 @@
                     </v-col>
                     <v-col cols="12" md="4">
                       <v-textarea
-                        label="número de serie"
+                        label="Número de serie"
                         auto-grow
                         outlined
                         rows="2"
@@ -80,35 +58,118 @@
                         maxlength="250"
                       ></v-textarea>
                     </v-col>
+                  </v-row>
+
+                  <v-row>
+                    <v-col cols="12" md="5">
+                      <v-textarea
+                        label="Precio"
+                        auto-grow
+                        rows="2"
+                        v-model.number="itemEstandar.precio"
+                        type="number"
+                        outlined
+                        min="0"
+                        prefix="S/."
+                        required
+                      ></v-textarea>
+                    </v-col>
+                    <v-col v-if="accionModal != 'Editar'" cols="12" md="3">
+                      <v-autocomplete
+                        v-model="itemEstandar.moneda"
+                        :items="['Soles', 'Dólares']"
+                        outlined
+                        label="Moneda"
+                        hide-no-data
+                      ></v-autocomplete>
+                    </v-col>
+                    <v-col v-if="accionModal == 'Editar'" cols="12" md="3">
+                      <v-text-field
+                        v-model="itemEstandar.moneda"
+                        label="Moneda"
+                        outlined
+                        disabled
+                      ></v-text-field>
+                    </v-col>
+
+                    
+                    <v-col cols="12" md="4">
+                      <v-menu
+                        v-model="menu"
+                        :close-on-content-click="false"
+                        transition="scale-transition"
+                        offset-y
+                        min-width="auto"
+                      >
+                        <template v-slot:activator="{ on, attrs }">
+                          <v-text-field
+                            v-model="itemEstandar.fecha_compra"
+                            outlined
+                            label="Fecha de Compra"
+                            prepend-icon="mdi-calendar"
+                            v-bind="attrs"
+                            v-on="on"
+                          ></v-text-field>
+                        </template>
+                        <v-date-picker
+                          v-model="itemEstandar.fecha_compra"
+                          no-title
+                          scrollable
+                          locale="es"
+                          @input="menu = false"
+                        ></v-date-picker>
+                      </v-menu>
+                    </v-col>
                     
                   </v-row>
                   <v-row>
-                    <v-col cols="12" md="6">
-                      <v-textarea
-                        label="vida útil"
-                        auto-grow
+                    <v-col cols="12" md="4">
+                      <v-text-field
+                        v-model.number="itemEstandar.proveedor"
+                        label="Proveedor"
                         outlined
-                        rows="2"
-                        v-model.number="itemEstandar.vida_util"
-                        row-height="15"
+                        required
                         counter
-                        maxlength="250"
+                        maxlength="50"
+                        :rules="reglasNombre"
+                      ></v-text-field>
+                    </v-col>
+                    <v-col cols="12" md="4">
+                      <v-textarea
+                        label="Vida estimada (años)"
+                        auto-grow
+                        rows="2"
+                        v-model.number="itemEstandar.vida_estimada"
+                        type="number"
+                        outlined
+                        min="0"
+                        required
                       ></v-textarea>
                     </v-col>
-                    <v-col cols="12" md="6">
-                      <v-textarea
-                        label="tipo depreciación"
-                        auto-grow
-                        outlined
-                        rows="2"
-                        v-model="itemEstandar.tipo_depreciacion"
-                        row-height="15"
-                        counter
-                        maxlength="250"
-                      ></v-textarea>
+                    <v-col cols="12" md="4">
+                      <v-row>
+                        <v-col v-if="accionModal != 'Editar'" cols="12">
+                          <v-autocomplete
+                            v-model="itemEstandar.tipo_depreciacion"
+                            :items="['Lineal', 'Acelerada', 'Suma de Dígitos', 'Macaulay', 'Declinante Balance']"
+                            outlined
+                            label="Tipo de Depreciación"
+                            hide-no-data
+                          ></v-autocomplete>
+                        </v-col>
+                        <v-col v-if="accionModal == 'Editar'" cols="12">
+                          <v-text-field
+                            v-model="itemEstandar.tipo_depreciacion"
+                            label="Tipo de Depreciación"
+                            outlined
+                            disabled
+                          ></v-text-field>
+                        </v-col>
+                      </v-row>
+
+                      
                     </v-col>
                   </v-row>
-
                   <v-row>
                     <v-col cols="12" md="12">
                       <v-textarea
@@ -116,6 +177,7 @@
                         auto-grow
                         outlined
                         rows="2"
+                        name="input-7-4"
                         v-model="itemEstandar.comentario"
                         row-height="15"
                         counter
@@ -124,21 +186,7 @@
                       ></v-textarea>
                     </v-col>
                   </v-row>
-                  <v-row>
-                    <v-col cols="12" md="4">
-                      <v-text-field
-                        v-model.number="itemEstandar.precio_kg_animal"
-                        label="Precio por kg vivo"
-                        type="number"
-                        outlined
-                        min="0"
-                        prefix="S/."
-                        required
-                      ></v-text-field>
-                    </v-col>
-                  </v-row>
-                  
-                  
+
                 </v-container>
               </v-card-text>
             </div>
@@ -189,12 +237,13 @@
 import TableMain from "@/components/TableMain.vue";
 import store from "@/store/store";
 import {
-  createAnimales,
   updateAnimales,
   deleteAnimales
 } from "@/services/Animales.js";
-import { getAllMaquinas } from "@/services/Maquinas.js";
-import { getAllEspecies } from "@/services/Especie.js";
+import { 
+  getAllMaquinasGranja,
+  createMaquinas
+ } from "@/services/Maquinas.js";
 export default {
   name: "granjaDetalleAnimales",
   props: {
@@ -205,13 +254,6 @@ export default {
     TableMain
   },
   computed: {
-    validar() {
-      if (this.itemEstandar.especie == null || this.itemEstandar.nombre == "") {
-        return true;
-      } else {
-        return false;
-      }
-    },
     usuarioID() {
       return store.state.user.data.id;
     }
@@ -221,42 +263,66 @@ export default {
       reglasNombre: [v => v.length <= 45 || "Máximo 45 Caracteres"],
       reglasComentario: [v => v.length <= 250 || "Máximo 250 Caracteres"],
       headers: [
-        {
-          text: "Nombre",
-          value: "nombre",
-          width: "20%",
-          align: "center"
-        },
-        {
-          text: "Numero de serie",
-          value: "numero_serie",
-          width: "10%",
-          align: "center"
-        },
-        {
-          text: "tipo",
-          value: "tipo",
-          width: "10%",
-          align: "center"
-        },
-        {
-          text: "vida_util",
-          value: "vida_util",
-          width: "10%",
-          align: "center"
-        },
-        {
-          text: "Fecha Adquisición",
-          value: "fecha_adquisicion",
-          width: "15%",
-          align: "center"
-        },
-        {
-          text: "Acciones",
-          value: "actions",
-          width: "15%",
-          align: "center"
-        }
+      {
+        text: "Nombre",
+        value: "nombre",
+        width: "20%",
+        align: "center"
+      },
+      {
+        text: "Número de serie",
+        value: "numero_serie",
+        width: "10%",
+        align: "center"
+      },
+      {
+        text: "Precio",
+        value: "precio",
+        width: "5%",
+        align: "center"
+      },
+      {
+        text: "Moneda",
+        value: "moneda",
+        width: "5%",
+        align: "center"
+      },
+      {
+        text: "Fecha de compra",
+        value: "fecha_compra",
+        width: "15%",
+        align: "center"
+      },
+      {
+        text: "Estado",
+        value: "estado",
+        width: "5%",
+        align: "center"
+      },
+      {
+        text: "Vida estimada",
+        value: "vida_estimada",
+        width: "5%",
+        align: "center"
+      },
+      {
+        text: "Tipo de depreciación",
+        value: "tipo_depreciacion",
+        width: "5%",
+        align: "center"
+      },
+      {
+        text: "Comentario",
+        value: "comentario",
+        width: "20%",
+        align: "center"
+      },
+      {
+        text: "Acciones",
+        value: "actions",
+        width: "10%",
+        align: "center"
+      }
       ],
       modo: 1,
       granja_id: this.prop_granja_id,
@@ -265,14 +331,13 @@ export default {
       accionModal: "Crear",
       action: [
         { description: "Editar" },
-        { description: "Contabilizar" }
+        { description: "Eliminar" }
       ],
-      itemEstandar: { especie: {} },
+      itemEstandar: {  },
       itemUpdate: {},
       tablaKey: 0,
       modalKey: 10,
       content: [],
-      selectEspecie: [],
       loading: false,
       number: 10,
       tableRequestStatus: 200,
@@ -294,19 +359,10 @@ export default {
     loadData() {
       this.content = [];
       this.loading = true;
-      // getAllAnimales(this.granja_id).then(Response => {
-      //   this.tableRequestStatus = Response.status;
-      //   if (Response.status == 200) {
-      //     Response.data.animales.map(usuario => {
-      //       this.content.push(usuario);
-      //     });
-      //   }
-      //   this.loading = false;
-      // });
-      getAllMaquinas(this.granja_id).then(Response => {
+      getAllMaquinasGranja(this.granja_id).then(Response => {
         this.tableRequestStatus = Response.status;
         if (Response.status == 200) {
-          Response.data.maquinas.map(usuario => {
+          Response.data.equipos.map(usuario => {
             this.content.push(usuario);
           });
         }
@@ -314,24 +370,11 @@ export default {
       });
     },
     loadSelect: function() {
-      this.selectEspecie = [];
-      getAllEspecies().then(Response => {
-        if (Response.status != 200) {
-          this.alert = true;
-          this.state = false;
-        } else {
-          console.log("Entro a Select");
-          Response.data.especies.map(item => {
-            this.selectEspecie.push(item);
-          });
-        }
-      });
-      this.modalKey += 1;
+      console.log("vuamos loadselect")
     },
     enviarData: function() {
-      this.itemEstandar.especie_id = this.itemEstandar.especie.id;
       if (this.accionModal === "Crear") {
-        createAnimales(this.itemEstandar).then(Response => {
+        createMaquinas(this.itemEstandar).then(Response => {
           if (Response.status == 200) {
             this.alert = true;
             this.state = true;
@@ -372,9 +415,7 @@ export default {
       this.itemEstandar = {
         nombre: "",
         comentario: "",
-        granja_id: this.granja_id,
-        especie_id: 0,
-        precio_kg_animal: 0
+        granja_id: this.granja_id
       };
       this.alert = false;
       this.state = false;
@@ -385,7 +426,6 @@ export default {
     accionItem: function(item, accion) {
       console.log("accion: " + JSON.stringify(item));
       if (accion === "Editar") {
-        this.itemEstandar.especie.nombre = item.especie.nombre;
         this.itemEstandar.estado_animal = item.estado_animal;
         this.itemEstandar.nombre = item.nombre;
         this.itemEstandar.comentario = item.comentario;
@@ -397,7 +437,7 @@ export default {
         this.state = false;
         this.modalDialog = true;
         this.loadSelect();
-      } else if (accion === "Crecimiento") {
+      } else if (accion === "eliminar") {
         this.itemEstandar = item;
         this.modo = 2;
       } else if (accion === "Contabilizar") {
