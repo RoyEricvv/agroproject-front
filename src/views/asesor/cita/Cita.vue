@@ -1,6 +1,6 @@
 <template>
     <v-container
-      class="primary"
+      class="fondo"
       fluid
       style="lef-margin: 0px; padding: 0px; width: 95%"
     >
@@ -67,14 +67,14 @@
                                     <v-spacer></v-spacer>
                                     <v-btn
                                       text
-                                      color="primary"
+                                      color="fondo"
                                       @click="menu = false"
                                     >
                                       Cancel
                                     </v-btn>
                                     <v-btn
                                       text
-                                      color="primary"
+                                      color="fondo"
                                       @click="$refs.menu.save(date)"
                                     >
                                       OK

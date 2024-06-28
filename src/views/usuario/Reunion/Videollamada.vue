@@ -1,6 +1,6 @@
 <template>
     <v-container
-      class="primary"
+      class="fondo"
       fluid
       style="lef-margin: 0px; padding: 0px; width: 95%"
     >

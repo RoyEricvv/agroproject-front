@@ -86,7 +86,7 @@ export default {
           }
         } else {
           this.alert = true;
-          this.mensaje = "Username o contraseña incorrecta";
+          this.mensaje = "Usuario o contraseña incorrecta";
         }
       });
     }

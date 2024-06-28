@@ -151,7 +151,7 @@
           hide-overlay
           transition="dialog-bottom-transition"
         >
-          <v-card color="primary">
+          <v-card color="fondo">
            
             <v-btn
               icon

@@ -25,7 +25,7 @@ export default new Vuetify({
             success: "#4CAF50",
             warning: "#FFC107",
             third: "#FFFFFF",
-            fondo: "#f8f8f8"
+            fondo: "#F8F8F8"
          }
       }
    }

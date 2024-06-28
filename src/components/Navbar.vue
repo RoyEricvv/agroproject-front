@@ -6,7 +6,7 @@
       </v-icon>
       <overline>{{ user.nombres }} {{ user.apellidos }}</overline>
       <v-spacer></v-spacer>
-      <v-btn @click.native="logoutAction()" color="#bdecb6">
+      <v-btn @click.native="logoutAction()" color="green">
         Cerrar Sesión
       </v-btn>
     </v-app-bar>
