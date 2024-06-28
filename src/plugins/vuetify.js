@@ -17,8 +17,8 @@ export default new Vuetify({
             warning: "#FFC107"
          },
          light: {
-            primary: "#bdecb6", //gris claro bdecb6
-            secondary: "#4CAF50", //verde
+            primary: "#0A332C", //gris claro bdecb6
+            secondary: "#00A884", //verde
             accent: "#363740", //gris oscuro
             error: "#FF5252",
             info: "#2196F3",

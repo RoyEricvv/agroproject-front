@@ -2,7 +2,7 @@
   <v-navigation-drawer
     app
     v-model="drawerP"
-    color="green"    
+    color="#222e35"    
   >
   <!-- src="../assets/granja.jpg" -->
     <v-divider></v-divider>

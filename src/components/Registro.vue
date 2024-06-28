@@ -71,7 +71,7 @@
         </v-card-actions>
         <p class="forgot-password text-center">
             Ya te encuentras registrado?
-            <router-link :to="{ name: 'login' }" style="color: #bdecb6;">Iniciar Sesión</router-link>
+            <router-link :to="{ name: 'login' }" style="color: #008000;">Iniciar Sesión</router-link>
           </p>
       </v-card>
     </div>

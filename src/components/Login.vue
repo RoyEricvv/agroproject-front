@@ -47,7 +47,7 @@
         </v-card-actions>
         <p class="forgot-password text-center">
             ¿No tienes una cuenta?
-            <router-link :to="{ name: 'register' }" style="color: #bdecb6;">Crear cuenta</router-link>
+            <router-link :to="{ name: 'register' }" style="color: #008000;">Crear cuenta</router-link>
         </p>
       </v-card>
     </div>
@@ -105,7 +105,7 @@ export default {
 }
 .transparent-card {
   background-color: rgba(255, 255, 255, 0.8); /* Color blanco con 80% de opacidad */
-  opacity: 0.8; /* Opacidad general del card */
+  opacity: 0.9; /* Opacidad general del card */
   max-width: 500px; /* Ancho máximo del card */
   padding: 20px; /* Espaciado interno dentro del card */
 
