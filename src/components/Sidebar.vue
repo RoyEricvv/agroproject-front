@@ -2,9 +2,9 @@
   <v-navigation-drawer
     app
     v-model="drawerP"
-    color="accent"
-    src="https://papers.co/wallpaper/papers.co-sm44-blue-dark-blur-gradation-36-3840x2400-4k-wallpaper.jpg"
+    color="green"    
   >
+  <!-- src="../assets/granja.jpg" -->
     <v-divider></v-divider>
     <br />
     <v-list dense nav>

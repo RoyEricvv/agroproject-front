@@ -25,7 +25,7 @@
               v-model="usuario.username"
               type="text"
               name="Username"
-              label="Username"
+              label="Usuario"
             ></v-text-field>
           </div>
           <div class="form-group">

@@ -1,5 +1,5 @@
 <template>
-  <v-app class="primary">
+  <v-app class="fondo">
     <v-main>
       <Navbar :userN="usuario" v-on:estadoDrawer="estadoDrawer" />
       <Sidebar
@@ -8,7 +8,7 @@
         :drawerP="drawer"
         v-on:estadoDrawer="estadoDrawer"
       />
-      <v-container class="primary">
+      <v-container class="fondo">
         <router-view />
       </v-container>
     </v-main>

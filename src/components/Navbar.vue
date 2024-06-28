@@ -1,12 +1,12 @@
 <template>
   <div>
-    <v-app-bar color="primary" flat app>
+    <v-app-bar color="green" flat app>
       <v-icon class="mr-2" @click="$emit('estadoDrawer')">
         mdi-menu
       </v-icon>
       <overline>{{ user.nombres }} {{ user.apellidos }}</overline>
       <v-spacer></v-spacer>
-      <v-btn @click.native="logoutAction()">
+      <v-btn @click.native="logoutAction()" color="#bdecb6">
         Cerrar Sesión
       </v-btn>
     </v-app-bar>

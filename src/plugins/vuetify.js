@@ -17,14 +17,15 @@ export default new Vuetify({
             warning: "#FFC107"
          },
          light: {
-            primary: "#f8f8f8", //gris claro bdecb6
+            primary: "#bdecb6", //gris claro bdecb6
             secondary: "#4CAF50", //verde
             accent: "#363740", //gris oscuro
             error: "#FF5252",
             info: "#2196F3",
             success: "#4CAF50",
             warning: "#FFC107",
-            third: "#FFFFFF"
+            third: "#FFFFFF",
+            fondo: "#f8f8f8"
          }
       }
    }
