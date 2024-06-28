@@ -258,7 +258,7 @@ import {
   deleteMaquinas
  } from "@/services/Maquinas.js";
 export default {
-  name: "granjaDetalleAnimales",
+  name: "granjaDetalleMaquinas",
   props: {
     prop_granja_id: Number,
     prop_granja_nombre: String

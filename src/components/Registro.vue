@@ -1,18 +1,17 @@
 <template>
   <div
-    style="width: 100%; height: 100%;"
+    class="login-container"
     align="center"
     justify="center"
-    class="vue-tempalte"
     v-bind:style="{ backgroundColor: color }"
   >
     <div style="margin-top: 5%;">
       <v-card
         outlined
-        max-width="500"
         align="center"
-        class="mx-auto"
+        class="transparent-card"
         justify="center"
+        elevation="14"
       >
         <v-card-text>
           <h1>Registrarse</h1>
@@ -61,19 +60,19 @@
             ></v-select>
           </div>
         </v-card-text>
-        <v-card-actions>
+        <v-card-actions
+          style="display: flex; justify-content: center;"
+        >
           <v-btn
-            align="center"
-            justify="center"
-            color="blue-grey"
+            color="green"
             @click="registrar()"
             >Registrarse</v-btn
           >
-          <p class="forgot-password text-right">
-            Ya te encuentras registrado?
-            <router-link :to="{ name: 'login' }">Iniciar Sesión</router-link>
-          </p>
         </v-card-actions>
+        <p class="forgot-password text-center">
+            Ya te encuentras registrado?
+            <router-link :to="{ name: 'login' }" style="color: #bdecb6;">Iniciar Sesión</router-link>
+          </p>
       </v-card>
     </div>
   </div>
@@ -101,7 +100,7 @@ export default {
   },
   data() {
     return {
-      color: "#009975",
+      color: "#f8f8f9",
       alert: false,
       error: false,
       mensaje: "",
@@ -154,3 +153,21 @@ export default {
   }
 };
 </script>
+<style>
+.login-container {
+  width: 100%;
+  height: 100%;
+  background-image: url('../assets/granja.jpg'); /* Ruta a tu imagen de fondo */
+  background-size: cover; /* Ajusta la imagen para cubrir todo el contenedor */
+  background-position: center; /* Centra la imagen */
+  display: flex;
+  justify-content: center;
+}
+.transparent-card {
+  background-color: rgba(255, 255, 255, 0.8); /* Color blanco con 80% de opacidad */
+  opacity: 0.8; /* Opacidad general del card */
+  max-width: 500px; /* Ancho máximo del card */
+  padding: 20px; /* Espaciado interno dentro del card */
+
+}
+</style>
