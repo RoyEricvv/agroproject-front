@@ -82,7 +82,7 @@ export async function updateMaquinas(equipo) {
   var responseData;
   //Get con parámetro en el url
   await axios
-    .post(url + "/" + equipo.id, equipo)
+    .put(url + "/" + equipo.id, equipo)
     .then(function(response) {
       console.log(response);
       // handle success

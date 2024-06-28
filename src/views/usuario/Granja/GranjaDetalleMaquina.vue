@@ -42,7 +42,7 @@
                         outlined
                         required
                         counter
-                        maxlength="45"
+                        maxlength="60"
                         :rules="reglasNombre"
                       ></v-text-field>
                     </v-col>
@@ -55,12 +55,44 @@
                         v-model.number="itemEstandar.numero_serie"
                         row-height="15"
                         counter
-                        maxlength="250"
+                        maxlength="40"
                       ></v-textarea>
                     </v-col>
                   </v-row>
+                  <v-row>
+                    <v-col cols="12" md="6"> 
+                      <v-autocomplete
+                        v-model="itemEstandar.estado"
+                        :items="['Vehículos', 'Maquinaría', 'Herramienta y Utensilios', 'Equipo de Manejo de Animales', 'Sistema de Alimentación y Agua','Instalaciones','Sistema de Seguridad','Vacunas y Medicamentos']"
+                        outlined
+                        label="Categorías de Activo"
+                        hide-no-data
+                      ></v-autocomplete>
+                    </v-col>
+                    <v-col cols="12" md="6">
+                      <v-text-field
+                        v-model.number="itemEstandar.proveedor"
+                        label="Proveedor"
+                        outlined
+                        required
+                        counter
+                        maxlength="50"
+                        :rules="reglasNombre"
+                      ></v-text-field>
+                    </v-col>
+                    
+                  </v-row>
 
                   <v-row>
+                    <v-col cols="12" md="3">
+                      <v-autocomplete
+                        v-model="itemEstandar.moneda"
+                        :items="['Soles', 'Dólares']"
+                        outlined
+                        label="Moneda"
+                        hide-no-data
+                      ></v-autocomplete>
+                    </v-col>
                     <v-col cols="12" md="5">
                       <v-textarea
                         label="Precio"
@@ -70,29 +102,10 @@
                         type="number"
                         outlined
                         min="0"
-                        prefix="S/."
+                        :prefix="precioPrefix"
                         required
                       ></v-textarea>
                     </v-col>
-                    <v-col v-if="accionModal != 'Editar'" cols="12" md="3">
-                      <v-autocomplete
-                        v-model="itemEstandar.moneda"
-                        :items="['Soles', 'Dólares']"
-                        outlined
-                        label="Moneda"
-                        hide-no-data
-                      ></v-autocomplete>
-                    </v-col>
-                    <v-col v-if="accionModal == 'Editar'" cols="12" md="3">
-                      <v-text-field
-                        v-model="itemEstandar.moneda"
-                        label="Moneda"
-                        outlined
-                        disabled
-                      ></v-text-field>
-                    </v-col>
-
-                    
                     <v-col cols="12" md="4">
                       <v-menu
                         v-model="menu"
@@ -124,17 +137,6 @@
                   </v-row>
                   <v-row>
                     <v-col cols="12" md="4">
-                      <v-text-field
-                        v-model.number="itemEstandar.proveedor"
-                        label="Proveedor"
-                        outlined
-                        required
-                        counter
-                        maxlength="50"
-                        :rules="reglasNombre"
-                      ></v-text-field>
-                    </v-col>
-                    <v-col cols="12" md="4">
                       <v-textarea
                         label="Vida estimada (años)"
                         auto-grow
@@ -146,28 +148,41 @@
                         required
                       ></v-textarea>
                     </v-col>
+                    <v-col cols="12" md="4"> 
+                      <v-autocomplete
+                        v-model="itemEstandar.tipo_depreciacion"
+                        :items="['Lineal', 'Acelerada', 'Suma de Dígitos', 'Macaulay', 'Declinante Balance']"
+                        outlined
+                        label="Tipo de Depreciación"
+                        hide-no-data
+                      ></v-autocomplete>
+                    </v-col>
                     <v-col cols="12" md="4">
-                      <v-row>
-                        <v-col v-if="accionModal != 'Editar'" cols="12">
-                          <v-autocomplete
-                            v-model="itemEstandar.tipo_depreciacion"
-                            :items="['Lineal', 'Acelerada', 'Suma de Dígitos', 'Macaulay', 'Declinante Balance']"
-                            outlined
-                            label="Tipo de Depreciación"
-                            hide-no-data
-                          ></v-autocomplete>
-                        </v-col>
-                        <v-col v-if="accionModal == 'Editar'" cols="12">
+                      <v-menu
+                        v-model="menu"
+                        :close-on-content-click="false"
+                        transition="scale-transition"
+                        offset-y
+                        min-width="auto"
+                      >
+                        <template v-slot:activator="{ on, attrs }">
                           <v-text-field
-                            v-model="itemEstandar.tipo_depreciacion"
-                            label="Tipo de Depreciación"
+                            v-model="itemEstandar.fecha_limite_garantia"
                             outlined
-                            disabled
+                            label="Fecha de Garantía"
+                            prepend-icon="mdi-calendar"
+                            v-bind="attrs"
+                            v-on="on"
                           ></v-text-field>
-                        </v-col>
-                      </v-row>
-
-                      
+                        </template>
+                        <v-date-picker
+                          v-model="itemEstandar.fecha_limite_garantia"
+                          no-title
+                          scrollable
+                          locale="es"
+                          @input="menu = false"
+                        ></v-date-picker>
+                      </v-menu>
                     </v-col>
                   </v-row>
                   <v-row>
@@ -236,13 +251,11 @@
 <script>
 import TableMain from "@/components/TableMain.vue";
 import store from "@/store/store";
-import {
-  updateAnimales,
-  deleteAnimales
-} from "@/services/Animales.js";
 import { 
   getAllMaquinasGranja,
-  createMaquinas
+  createMaquinas,
+  updateMaquinas,
+  deleteMaquinas
  } from "@/services/Maquinas.js";
 export default {
   name: "granjaDetalleAnimales",
@@ -254,6 +267,9 @@ export default {
     TableMain
   },
   computed: {
+    precioPrefix() {
+      return this.itemEstandar.moneda === 'Dólares' ? '$' : 'S/.';
+    },
     usuarioID() {
       return store.state.user.data.id;
     }
@@ -294,7 +310,13 @@ export default {
         align: "center"
       },
       {
-        text: "Estado",
+        text: "Fecha de garantía",
+        value: "fecha_limite_garantia",
+        width: "15%",
+        align: "center"
+      },
+      {
+        text: "Categoría",
         value: "estado",
         width: "5%",
         align: "center"
@@ -387,13 +409,22 @@ export default {
           this.tablaKey += 1;
         });
       } else {
-        this.itemUpdate.estado_animal = this.itemEstandar.estado_animal;
+        // Aquí se actualiza la maquina
+        console.log(this.itemEstandar);
         this.itemUpdate.nombre = this.itemEstandar.nombre;
+        this.itemUpdate.numero_serie = this.itemEstandar.numero_serie;
+        this.itemUpdate.precio = this.itemEstandar.precio;
+        this.itemUpdate.moneda = this.itemEstandar.moneda;
+        this.itemUpdate.proveedor = this.itemEstandar.proveedor;
+        this.itemUpdate.vida_estimada = this.itemEstandar.vida_estimada;
+        this.itemUpdate.tipo_depreciacion = this.itemEstandar.tipo_depreciacion;
         this.itemUpdate.comentario = this.itemEstandar.comentario;
-        this.itemUpdate.precio_kg_animal = this.itemEstandar.precio_kg_animal;
+        this.itemUpdate.fecha_compra = this.itemEstandar.fecha_compra;
+        this.itemUpdate.fecha_limite_garantia = this.itemEstandar.fecha_limite_garantia;
         this.itemUpdate.granja_id = this.itemEstandar.granja_id;
+        this.itemUpdate.estado = this.itemEstandar.estado;
         this.itemUpdate.id = this.itemEstandar.id;
-        updateAnimales(this.itemUpdate).then(Response => {
+        updateMaquinas(this.itemUpdate).then(Response => {
           if (Response.status == 200) {
             this.alert = true;
             this.state = true;
@@ -435,6 +466,8 @@ export default {
         this.itemEstandar.tipo_depreciacion = item.tipo_depreciacion;
         this.itemEstandar.comentario = item.comentario;
         this.itemEstandar.fecha_compra = item.fecha_compra;
+        this.itemEstandar.fecha_limite_garantia = item.fecha_limite_garantia;
+        this.itemEstandar.estado = item.estado;
         this.itemEstandar.granja_id = item.granja_id;
         this.itemEstandar.id = item.id;
         this.accionModal = "Editar";
@@ -446,7 +479,8 @@ export default {
         this.itemEstandar = item;
         this.modo = 2;
       } else {
-        deleteAnimales(item.id).then(Response => {
+        // Aqui se elimina la maquina
+        deleteMaquinas(item.id).then(Response => {
           if (Response.status == 200) {
             this.alert = true;
             this.state = true;
