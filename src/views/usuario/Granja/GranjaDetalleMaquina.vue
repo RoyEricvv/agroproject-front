@@ -180,7 +180,7 @@
                           no-title
                           scrollable
                           locale="es"
-                          @input="menu = false"
+                          @input="menu2 = false"
                         ></v-date-picker>
                       </v-menu>
                     </v-col>
@@ -278,6 +278,8 @@ export default {
     return {
       reglasNombre: [v => v.length <= 45 || "Máximo 45 Caracteres"],
       reglasComentario: [v => v.length <= 250 || "Máximo 250 Caracteres"],
+      menu: false,
+      menu2: false,
       headers: [
       {
         text: "Nombre",

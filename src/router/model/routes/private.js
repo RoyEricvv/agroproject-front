@@ -78,8 +78,16 @@ const routes = [
           )
       },
       {
-        path: "reuniones",
-        component: () => import("../../../views/usuario/Reunion/Reunion.vue")
+        path: "vacuna",
+        component: () => import("../../../views/usuario/Sanitario/SanitarioVacuna.vue")
+      },
+      {
+        path: "antibiotico",
+        component: () => import("../../../views/usuario/Sanitario/SanitarioAntibiotico.vue")
+      },
+      {
+        path: "hormona",
+        component: () => import("../../../views/usuario/Sanitario/SanitarioHormona.vue")
       },
       {
         path: "reportes",

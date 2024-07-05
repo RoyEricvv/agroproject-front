@@ -52,8 +52,21 @@ export default {
           link: "/usuarioHome/requerimiento"
         },
         {
-          title: "Reunion",
-          link: "/usuarioHome/reuniones"
+          title: "Sanitario",
+          children: [
+            {
+              title: "Vacuna",
+              link: "/usuarioHome/vacuna"
+            },
+            {
+              title: "Antibiotico",
+              link: "/usuarioHome/antibiotico"
+            },
+            {
+              title: "Hormona",
+              link: "/usuarioHome/hormona"
+            }
+          ]
         },
         {
           title: "Reporte",
