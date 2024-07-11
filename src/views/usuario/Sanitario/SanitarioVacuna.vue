@@ -1,73 +1,56 @@
 <template>
-  <v-col :cols="cols" :md="md">
-    <v-menu
-      v-model="menu"
-      :close-on-content-click="false"
-      transition="scale-transition"
-      offset-y
-      min-width="auto"
-    >
-      <template v-slot:activator="{ on, attrs }">
-        <v-text-field
-          v-model="internalValue"
-          outlined
-          :label="label"
-          prepend-icon="mdi-calendar"
-          v-bind="attrs"
-          v-on="on"
-        ></v-text-field>
-      </template>
-      <v-date-picker
-        v-model="internalValue"
-        no-title
-        scrollable
-        locale="es"
-        @input="updateValue"
-      ></v-date-picker>
-    </v-menu>
-  </v-col>
+  <v-app id="inspire">
+    <v-card>
+      <v-tabs v-model="tab" background-color="green" dark>
+        <v-tab v-for="(item, index) in items" :key="index">{{ item.tab }}</v-tab>
+      </v-tabs>
+
+      <v-tabs-items v-model="tab">
+        <v-tab-item v-for="(item, index) in items" :key="index">
+          <v-card flat>
+            <v-card-text>
+              <div v-if="item.tab === 'Datos del producto'">
+                <RegistroSanitario :prop_granja_nombre="'Vacuna'"/>
+              </div>
+              <div v-if="item.tab === 'Consumo del producto'">
+                {{ item.content }}
+              </div>
+              
+            </v-card-text>
+          </v-card>
+        </v-tab-item>
+      </v-tabs-items>
+    </v-card>
+  </v-app>
 </template>
 
 <script>
+import RegistroSanitario from "@/components/RegistroSanitario.vue";
+
 export default {
-  props: {
-    value: {
-      type: String,
-      default: () => new Date().toISOString().substr(0, 10) // Valor predeterminado como fecha de hoy
-    },
-    label: {
-      type: String,
-      required: true
-    },
-    cols: {
-      type: [Number, String],
-      default: 12
-    },
-    md: {
-      type: [Number, String],
-      default: 4
-    }
+  components: {
+    RegistroSanitario
   },
   data() {
     return {
-      menu: false,
-      internalValue: this.value // Inicializar con el valor de la prop
+      tab: 0,
+      items: [
+        {
+          tab: 'Datos del producto',
+          content: 'Datos del producto'
+        },
+        {
+          tab: 'Consumo del producto',
+          content: 'Consumo del producto'
+        }
+      ]
     };
-  },
-  watch: {
-    value(newValue) {
-      this.internalValue = newValue; // Actualizar el valor interno cuando la prop cambie
-    }
-  },
-  methods: {
-    updateValue(newValue) {
-      this.$emit('input', newValue); // Emitir el evento de actualización
-      this.internalValue = newValue; // Actualizar el valor interno
-    }
   }
 };
 </script>
 
 <style scoped>
-/* Tu estilo aquí */
+.v-application {
+  font-family: 'Roboto', sans-serif;
+}
 </style>
